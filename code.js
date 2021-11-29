@@ -1,23 +1,26 @@
 function playRound(playerSel) {
     let computerSel = computerPlay();
-    console.log(computerSel);
-    if(playerSel === computerSel){
+    let gametxt = '';
+    if(playerSel == computerSel){
         playerScore++;
         computerScore++;
-        return 'Tie!';
+        gametxt = 'Tie!';
     }
-    if((playerSel === 'rock' && computerSel === 'scissors') ||
+    else if((playerSel === 'rock' && computerSel === 'scissors') ||
     (playerSel === 'paper' && computerSel === 'rock') ||
     (playerSel === 'scissors' && computerSel === 'paper')){
         playerScore++;
-        return 'You won!';
+        gametxt = 'You won!';
+    }else{
+        computerScore++;
+        gametxt ='you lost little bitch';
     }
-    computerScore++;
-    return 'you lost little bitch';
+    document.querySelector('#usrScore').innerHTML = `User: ${playerScore}`;
+    document.querySelector('#botScore').innerHTML = `Bot: ${computerScore}`;
+    document.querySelector('#gametxt').innerHTML = gametxt;
 }
 function computerPlay(){
     let x = +(Math.random()*3).toFixed();
-    console.log(x);
     switch(x){
         case 0:
             return 'rock';
@@ -34,12 +37,13 @@ function computerPlay(){
             
     }
 }
-
 let playerScore = 0;
 let computerScore = 0;
 
-let playerSel = () => prompt('rock | paper | scissors');
+let rockbtn = document.querySelector('#rockbtn');
+let paperbtn = document.querySelector('#paperbtn');
+let scissorsbtn = document.querySelector('#scissorsbtn');
 
-for (let i = 0; i < 5; i++) {
-    console.log(playRound(playerSel())+` ur score: ${playerScore} bot: ${computerScore}`);
-}
+rockbtn.addEventListener('click', ()=>playRound('rock'));
+paperbtn.addEventListener('click', ()=>playRound('paper'));
+scissorsbtn.addEventListener('click', ()=>playRound('scissors'));
